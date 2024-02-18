@@ -5,12 +5,6 @@ using VContainer;
 using VContainer.Unity;
 using Random = System.Random;
 
-/// <summary>
-/// Infinite runner level generator. Generates pickups and obstacles at run time based on camera position.
-/// </summary>
-/// <remarks>
-/// Supports creating additional coins without modifying the source code.
-/// </remarks>
 public class ItemsGenerator : MonoBehaviour
 {
     private const float GenerationAheadDistance = 100f;
@@ -20,13 +14,13 @@ public class ItemsGenerator : MonoBehaviour
     private MainCamera _mainCamera;
     private IObjectResolver _objectResolver;
 
-    [SerializeField] private List<LevelObject> _levelObjects = new();
+    [SerializeField] private List<LevelObjects> _levelObjects = new();
 
     private Random _random = new();
-    private LevelObject _lastSelectedLevelObject;
+    private LevelObjects _lastSelectedLevelObjects;
 
     private int _totalPickupRoll;
-    private float _lastObjectZPosition = 20f;
+    private float _lastObjectPos = 20f;
     private int _lastLane;
 
     [Inject]
@@ -40,7 +34,7 @@ public class ItemsGenerator : MonoBehaviour
 
     private void TotalPickupRoll()
     {
-        foreach (LevelObject levelPickup in _levelObjects)
+        foreach (LevelObjects levelPickup in _levelObjects)
             _totalPickupRoll += levelPickup.SpawnChance;
     }
 
@@ -53,23 +47,23 @@ public class ItemsGenerator : MonoBehaviour
     {
         float generationDistance = _mainCamera.transform.position.z + GenerationAheadDistance;
 
-        while (_lastObjectZPosition < generationDistance)
+        while (_lastObjectPos < generationDistance)
         {
-            LevelObject levelObject = SelectRandomObject();
-            int amount = _random.Next(levelObject.MinimumInRow, levelObject.MaximumInRow);
+            LevelObjects levelObjects = SelectRandomObjects();
+            int amount = _random.Next(levelObjects.MinimumInRow, levelObjects.MaximumInRow);
 
             int lane = GetRandomLane();
             _lastLane = lane;
 
             while (amount > 0)
             {
-                float zPosition = _lastObjectZPosition + DistanceBetweenObjects;
+                float zPosition = _lastObjectPos + DistanceBetweenObjects;
 
-                if (levelObject.Prefab != null)
-                    SpawnLevelObject(levelObject.Prefab, lane, zPosition);
+                if (levelObjects.Prefab != null)
+                    SpawnLevelObject(levelObjects.Prefab, lane, zPosition);
 
                 amount--;
-                _lastObjectZPosition = zPosition;
+                _lastObjectPos = zPosition;
             }
         }
     }
@@ -91,29 +85,29 @@ public class ItemsGenerator : MonoBehaviour
         levelGameObject.transform.position = new Vector3(lane * HorizontalOffset, 0f, zPosition);
     }
 
-    private LevelObject SelectRandomObject()
+    private LevelObjects SelectRandomObjects()
     {
-        LevelObject selectedObject = null;
+        LevelObjects selectedObject = null;
 
         do
         {
             float pickupRoll = _random.Next(0, _totalPickupRoll);
             float minimumRollToSelect = 0;
 
-            foreach (LevelObject levelObject in _levelObjects)
+            foreach (LevelObjects levelObjects in _levelObjects)
             {
-                if (pickupRoll <= levelObject.SpawnChance + minimumRollToSelect)
+                if (pickupRoll <= levelObjects.SpawnChance + minimumRollToSelect)
                 {
-                    selectedObject = levelObject;
+                    selectedObject = levelObjects;
                     break;
                 }
 
-                minimumRollToSelect += levelObject.SpawnChance;
+                minimumRollToSelect += levelObjects.SpawnChance;
             }
         }
-        while (_lastSelectedLevelObject == selectedObject);
+        while (_lastSelectedLevelObjects == selectedObject);
 
-        _lastSelectedLevelObject = selectedObject;
+        _lastSelectedLevelObjects = selectedObject;
 
         return selectedObject;
     }

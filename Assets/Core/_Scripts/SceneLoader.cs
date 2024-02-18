@@ -4,13 +4,13 @@ using VContainer.Unity;
 
 public class SceneLoader
 {
-    private readonly GameLifetime _gameLifetime;
+    private readonly GameView _gameView;
 
-    public SceneLoader(GameLifetime gameLifetime) => _gameLifetime = gameLifetime;
+    public SceneLoader(GameView gameView) => _gameView = gameView;
 
     public async UniTask LoadSceneAsync(int sceneIndex)
     {
-        using (LifetimeScope.EnqueueParent(_gameLifetime))
+        using (LifetimeScope.EnqueueParent(_gameView))
         {
             await SceneManager.LoadSceneAsync(sceneIndex);
         }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class LevelObject
+public class LevelObjects
 {
     public GameObject Prefab;
     public int SpawnChance;

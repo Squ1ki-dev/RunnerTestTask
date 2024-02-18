@@ -20,7 +20,7 @@ public partial class Character
         {
             newVelocity.y = _jumpVelocity;
             _animator.SetBool(_jumpId, true);
-            StartCoroutine(StopJump(0.75f));
+            StartCoroutine(FinishJump(0.75f));
         }
 
         Velocity = newVelocity;
@@ -43,7 +43,7 @@ public partial class Character
 
     public void Move(Vector3 motion) => _characterController.Move(motion);
 
-    private IEnumerator StopJump(float delay)
+    private IEnumerator FinishJump(float delay)
     {
         yield return new WaitForSeconds(delay);
         _animator.SetBool(_jumpId, false);
