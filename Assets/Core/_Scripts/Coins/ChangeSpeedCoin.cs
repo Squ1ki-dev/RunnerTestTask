@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class ChangeSpeedCoin : MonoBehaviour
 {
-    [SerializeField] private float _duration = 10f;
-    [SerializeField] private float _speedChange;
+    [SerializeField] private CoinSO _coinSo;
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -11,7 +10,7 @@ public class ChangeSpeedCoin : MonoBehaviour
         IRunner runner = collider.GetComponent<IRunner>();
         if (runner != null)
         {
-            runner.AddEffect(new ChangeSpeedCoinEffect(runner, _speedChange, _duration));
+            runner.AddEffect(new ChangeSpeedCoinEffect(runner, _coinSo.SpeedChange, _coinSo.Duration));
             Destroy(gameObject);
         }
     }

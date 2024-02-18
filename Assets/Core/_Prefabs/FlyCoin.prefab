@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58091b17b0190844ab0b9eb3b23ee88f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 10
+  _coinSo: {fileID: 11400000, guid: 80bd2454a6e3fe04bbe827d39519d818, type: 2}
 --- !u!135 &6181121769097913172
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -138,8 +138,16 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8055716550757744055}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0.7, z: 0}
