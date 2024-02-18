@@ -8,11 +8,6 @@ using VContainer;
 [RequireComponent(typeof(CharacterController))]
 public partial class Character : MonoBehaviour, IRunner
 {
-    private readonly int _deadAnimId = Animator.StringToHash("Death");
-    private readonly int _flyingAnimId = Animator.StringToHash("Flying");
-    private readonly int _jumpId = Animator.StringToHash("Jump");
-    private readonly int _runAnimId = Animator.StringToHash("Running");
-
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpVelocity;
     [SerializeField] private float _gravity;
@@ -33,10 +28,7 @@ public partial class Character : MonoBehaviour, IRunner
     public int Score { get; private set; }
 
     [Inject]
-    public void Construct(IPublisher<CoinsScoreMessage> scorePublisher)
-    {
-        _scorePublisher = scorePublisher;
-    }
+    public void Construct(IPublisher<CoinsScoreMessage> scorePublisher) => _scorePublisher = scorePublisher;
 
     private void Awake()
     {
@@ -47,15 +39,15 @@ public partial class Character : MonoBehaviour, IRunner
 
     private void Update()
     {
-        _animator.SetBool(_deadAnimId, IsDead);
-
-        if (IsDead) return;
+        if (IsDead)
+        {
+            SetDeadAnim();
+            return;
+        }
 
         UpdateCoinBehaviors();
         HandleMovement();
-
-        _animator.SetFloat(_runAnimId, Velocity.z);
-        _animator.SetBool(_flyingAnimId, Position.y > 1f && !_animator.GetBool(_jumpId));
+        SetAnimations();
     }
 
     public void IncreaseScore(int amount)

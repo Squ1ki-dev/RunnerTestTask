@@ -19,7 +19,7 @@ public partial class Character
         if (SwipeController.SwipeUp && _characterController.isGrounded)
         {
             newVelocity.y = _jumpVelocity;
-            _animator.SetBool(_jumpId, true);
+            _animator.SetBool(AnimatorHashIDs.JumpAnimId, true);
             StartCoroutine(FinishJump(0.75f));
         }
 
@@ -46,7 +46,7 @@ public partial class Character
     private IEnumerator FinishJump(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _animator.SetBool(_jumpId, false);
+        _animator.SetBool(AnimatorHashIDs.JumpAnimId, false);
     }
 
     private IEnumerator HorizontalMove(int direction)
