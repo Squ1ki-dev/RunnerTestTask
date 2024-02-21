@@ -9,7 +9,7 @@ public class FlyCoinEffect : IEffectBehaviour
     private const float SpeedAdjustment = 5f;
 
     private readonly IRunner _runner;
-    private readonly float _duration;
+    private readonly float _duration = 10f;
 
     private float _elapsedTime;
 

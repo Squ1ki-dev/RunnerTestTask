@@ -129,8 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94249cc5dfe46e848927c5771d032154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinSo: {fileID: 11400000, guid: de541b306fd96354690e7a92f1036a6b, type: 2}
-  _speedChange: 5
+  _speedCoinSo: {fileID: 11400000, guid: 8116d3b7df90520499786f2fe5b082d4, type: 2}
 --- !u!135 &7163614345347680386
 SphereCollider:
   m_ObjectHideFlags: 0

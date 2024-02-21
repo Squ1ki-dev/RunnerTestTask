@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FlyCoin : MonoBehaviour
 {
-    [SerializeField] private CoinSO _coinSo;
+    [SerializeField] private FlyCoinSO _coinSo;
 
     private void OnTriggerEnter(Collider collider)
     {

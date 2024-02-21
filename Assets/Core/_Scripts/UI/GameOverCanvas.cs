@@ -6,7 +6,8 @@ using VContainer.Unity;
 
 public class GameOverCanvas : IStartable, IDisposable
 {
-    private IRunner _runner;
+    private Character _runner;
+    private ScoreController _score;
     private SceneLoader _sceneLoader;
     private GameOverView _gameOverView;
     private readonly CompositeDisposable _disposable = new();
@@ -14,7 +15,7 @@ public class GameOverCanvas : IStartable, IDisposable
     private const int RestartSceneIndex = 1;
 
     [Inject]
-    public void Construct(GameOverView gameOverView, IRunner runner, SceneLoader sceneLoader)
+    public void Construct(GameOverView gameOverView, Character runner, SceneLoader sceneLoader)
     {
         _runner = runner;
         _sceneLoader = sceneLoader;

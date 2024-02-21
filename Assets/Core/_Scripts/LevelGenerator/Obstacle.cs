@@ -4,7 +4,7 @@ public class Obstacle : MonoBehaviour
 {
     private void OnTriggerEnter(Collider collider)
     {
-        IRunner runner = collider.GetComponent<IRunner>();
+        Character runner = collider.GetComponent<Character>();
         if (runner != null)
             runner.IsDead = true;
     }
