@@ -21,4 +21,5 @@ public class AnimationController : MonoBehaviour
     public void SetDeadAnim() => _animator.SetBool(AnimatorHashIDs.DeadAnimId, true);
     private void SetRunningAnim() => _animator.SetFloat(AnimatorHashIDs.RunAnimId, Velocity.z);
     private void SetFlyingAnim() => _animator.SetBool(AnimatorHashIDs.FlyingAnimId, transform.position.y > 1f && !_animator.GetBool(AnimatorHashIDs.JumpAnimId));
+    public void SetJumpAnim(bool isPlay) => _animator.SetBool(AnimatorHashIDs.JumpAnimId, isPlay);
 }

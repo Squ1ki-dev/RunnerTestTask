@@ -1,7 +1,7 @@
 using UniRx;
 using UnityEngine;
 
-public interface IRunner : IEffectTarget
+public interface IRunner
 {
     Vector3 Position { get; }
     Vector3 Velocity { get; set; }

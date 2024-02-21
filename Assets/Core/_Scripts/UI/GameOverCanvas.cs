@@ -7,7 +7,6 @@ using VContainer.Unity;
 public class GameOverCanvas : IStartable, IDisposable
 {
     private Character _runner;
-    private ScoreController _score;
     private SceneLoader _sceneLoader;
     private GameOverView _gameOverView;
     private readonly CompositeDisposable _disposable = new();

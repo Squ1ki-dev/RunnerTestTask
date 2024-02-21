@@ -1,15 +1,10 @@
 using UnityEngine;
 
-public class FlyCoinEffect : IEffectBehaviour
+public class FlyCoinEffect : CoinEffect, IEffectBehaviour
 {
     private const float FlyHeight = 2f;
     private const float FlyTweenSpeed = 6f;
-    private const float MagnetRadius = 7f;
-    private const float MagnetSpeed = 20f;
     private const float SpeedAdjustment = 5f;
-
-    private readonly IRunner _runner;
-    private readonly float _duration = 10f;
 
     private float _elapsedTime;
 
@@ -39,14 +34,6 @@ public class FlyCoinEffect : IEffectBehaviour
         {
             float heightAdjustmentThisFrame = Mathf.Min(FlyTweenSpeed * Time.deltaTime, characterToFlyHeightDifference);
             _runner.Move(new Vector3(0f, heightAdjustmentThisFrame, 0f));
-        }
-
-        Collider[] overlapColliders = Physics.OverlapSphere(_runner.Position, MagnetRadius);
-        foreach (Collider overlapCollider in overlapColliders)
-        {
-            DefaultCoin defaultCoinCoin = overlapCollider.GetComponent<DefaultCoin>();
-            if(defaultCoinCoin == null) return;
-            defaultCoinCoin.transform.position = Vector3.MoveTowards(defaultCoinCoin.transform.position, _runner.Position, MagnetSpeed * Time.deltaTime);
         }
     }
 

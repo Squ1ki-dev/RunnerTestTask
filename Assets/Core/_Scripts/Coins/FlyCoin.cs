@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class FlyCoin : MonoBehaviour
+public class FlyCoin : Coin<FlyCoinEffect>
 {
     [SerializeField] private FlyCoinSO _coinSo;
 
-    private void OnTriggerEnter(Collider collider)
+    protected override void SelectCoin(Collider collider)
     {
-        IRunner runner = collider.GetComponent<IRunner>();
+        Character runner = collider.GetComponent<Character>();
         if (runner != null)
         {
             runner.AddEffect(new FlyCoinEffect(runner, _coinSo.Duration));

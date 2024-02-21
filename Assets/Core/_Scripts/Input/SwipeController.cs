@@ -73,14 +73,11 @@ public class SwipeController : MonoBehaviour, ITouchSource
             if (Input.touches[0].phase == TouchPhase.Began)
             {
                 TapAndDrag(true, true);
-                //Tap = true;
-                //isDraging = true;
                 startTouch = Input.touches[0].position;
             }
             else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             {
                 TapAndDrag(false, false);
-                //isDraging = false;
                 Reset();
             }
         }
@@ -92,7 +89,7 @@ public class SwipeController : MonoBehaviour, ITouchSource
         this.isDraging = isDraging;
     }
 
-    private void Reset()
+    public void Reset()
     {
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;

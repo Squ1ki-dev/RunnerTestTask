@@ -1,10 +1,8 @@
 using UnityEngine;
 
 // Effects from this coin can be stacked, each effect has its own duration.
-public class ChangeSpeedCoinEffect : IEffectBehaviour
+public class ChangeSpeedCoinEffect : CoinEffect, IEffectBehaviour
 {
-    private readonly IRunner _runner;
-    private readonly float _duration;
     private readonly float _speedAdjustment;
 
     private float _elapsedTime;
