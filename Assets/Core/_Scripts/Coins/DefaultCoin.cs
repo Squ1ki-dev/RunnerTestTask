@@ -4,7 +4,7 @@ public class DefaultCoin : MonoBehaviour
 {
     private void OnTriggerEnter(Collider collider)
     {
-        Character runner = collider.GetComponent<Character>();
+        Player runner = collider.GetComponent<Player>();
         if (runner != null)
         {
             runner.IncreaseScore(1);

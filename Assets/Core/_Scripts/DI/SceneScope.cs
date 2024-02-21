@@ -6,7 +6,7 @@ using VContainer.Unity;
 public class SceneScope : LifetimeScope
 {
     [SerializeField] private MainCamera _mainCamera;
-    [SerializeField] private Character _playerCharacter;
+    [SerializeField] private Player _playerCharacter;
     [SerializeField] private GameOverView _gameOverView;
     [SerializeField] private CoinsScoreTextView _coinsScoreTextView;
 

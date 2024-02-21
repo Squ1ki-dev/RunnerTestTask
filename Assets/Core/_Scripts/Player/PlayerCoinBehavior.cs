@@ -5,8 +5,8 @@ using UniRx;
 
 public class PlayerCoinBehavior
 {
-    private Character _character;
-    public PlayerCoinBehavior(Character character) => _character = character;
+    private Player _character;
+    public PlayerCoinBehavior(Player character) => _character = character;
 
     public void UpdateCoinBehaviors()
     {

@@ -6,7 +6,7 @@ using VContainer;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public partial class Character : MonoBehaviour, IRunner
+public partial class Player : MonoBehaviour, IRunner
 {
     private int _movementLane = 0;
     [SerializeField] private float _speed;
@@ -23,11 +23,12 @@ public partial class Character : MonoBehaviour, IRunner
     public Vector3 Velocity { get; set; }
     public bool IsDead { get; set; } = false;
     public int Score { get; private set; }
+    public ReactiveCollection<IEffectBehaviour> EffectBehaviors { get; } = new();
     private IPublisher<CoinsScoreMessage> _scorePublisher;
 
     [Inject]
     public void Construct(IPublisher<CoinsScoreMessage> scorePublisher) => _scorePublisher = scorePublisher;
-    public ReactiveCollection<IEffectBehaviour> EffectBehaviors { get; } = new();
+    
 
 
     private void Awake()
@@ -39,14 +40,11 @@ public partial class Character : MonoBehaviour, IRunner
         Velocity = new Vector3(0f, 0f, _speed);
     }
 
+    private void OnEnable() => EventManager.OnGameOver += _animController.SetDeadAnim;
+    private void OnDisable() => EventManager.OnGameOver -= _animController.SetDeadAnim;
+
     private void Update()
     {
-        if (IsDead)
-        {
-            _animController.SetDeadAnim();
-            return;
-        }
-
         _coinBehaviorManager.UpdateCoinBehaviors();
         HandleMovement();
         _animController.SetAnimations();
@@ -86,14 +84,12 @@ public partial class Character : MonoBehaviour, IRunner
 
         newVelocity.y += _gravity * Time.deltaTime;
 
-        // Horizontal movement and jump input
         HandleHorizontalMovement();
 
         if (SwipeController.SwipeUp && _characterController.isGrounded)
         {
             newVelocity.y = _jumpVelocity;
             _animController.SetJumpAnim(true);
-            //_animator.SetBool(AnimatorHashIDs.JumpAnimId, true);
             StartCoroutine(FinishJump(0.75f));
         }
 
