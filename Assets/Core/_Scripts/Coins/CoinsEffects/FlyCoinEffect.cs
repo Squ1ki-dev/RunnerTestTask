@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class FlyCoinEffect : CoinEffect, IEffectBehaviour
 {
-    private const float FlyHeight = 2f;
-    private const float FlyTweenSpeed = 6f;
-    private const float SpeedAdjustment = 5f;
+    private float _flyHeight;
+    private float _flyTweenSpeed;
+    private float _speedAdjustment;
 
     private float _elapsedTime;
 
@@ -12,10 +12,13 @@ public class FlyCoinEffect : CoinEffect, IEffectBehaviour
     public float TimeRemaining => 1f - _elapsedTime / _duration;
     public bool OutOfTime => _elapsedTime >= _duration;
 
-    public FlyCoinEffect(IRunner runner, float duration)
+    public FlyCoinEffect(IRunner runner, CoinEffectSO config) : base(runner, config)
     {
         _runner = runner;
-        _duration = duration;
+        _flyHeight = config.FlyHeight;
+        _flyTweenSpeed = config.FlyTweenSpeed;
+        _speedAdjustment = config.SpeedAdjustment;
+        _duration = config.Duration;
     }
 
     public void EffectUpdating(float deltaTime)
@@ -25,17 +28,17 @@ public class FlyCoinEffect : CoinEffect, IEffectBehaviour
         _elapsedTime += deltaTime;
 
         if (started)
-            _runner.Velocity = new Vector3(_runner.Velocity.x, _runner.Velocity.y, _runner.Velocity.z + SpeedAdjustment);
+            _runner.Velocity = new Vector3(_runner.Velocity.x, _runner.Velocity.y, _runner.Velocity.z + _speedAdjustment);
 
         _runner.Velocity = new Vector3(_runner.Velocity.x, 0f, _runner.Velocity.z);
-        float characterToFlyHeightDifference = FlyHeight - _runner.Position.y;
+        float characterToFlyHeightDifference = _flyHeight - _runner.Position.y;
 
         if (characterToFlyHeightDifference > 0)
         {
-            float heightAdjustmentThisFrame = Mathf.Min(FlyTweenSpeed * Time.deltaTime, characterToFlyHeightDifference);
+            float heightAdjustmentThisFrame = Mathf.Min(_flyTweenSpeed * Time.deltaTime, characterToFlyHeightDifference);
             _runner.Move(new Vector3(0f, heightAdjustmentThisFrame, 0f));
         }
     }
 
-    public void EndEffect() => _runner.Velocity = new Vector3(_runner.Velocity.x, _runner.Velocity.y, _runner.Velocity.z - SpeedAdjustment);
+    public void EndEffect() => _runner.Velocity = new Vector3(_runner.Velocity.x, _runner.Velocity.y, _runner.Velocity.z - _speedAdjustment);
 }

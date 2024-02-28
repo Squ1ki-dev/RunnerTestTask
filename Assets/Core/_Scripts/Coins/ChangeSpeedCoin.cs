@@ -9,7 +9,7 @@ public class ChangeSpeedCoin : Coin<ChangeSpeedCoinEffect>
         Player runner = collider.GetComponent<Player>();
         if (runner != null)
         {
-            runner.AddEffect(new ChangeSpeedCoinEffect(runner, _speedCoinSo.SpeedChange, _speedCoinSo.Duration));
+            runner.AddEffect(new ChangeSpeedCoinEffect(runner, _speedCoinSo));
             Destroy(gameObject);
         }
     }

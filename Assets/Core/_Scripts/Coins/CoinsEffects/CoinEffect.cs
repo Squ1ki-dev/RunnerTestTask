@@ -6,4 +6,10 @@ public abstract class CoinEffect
 {
     public IRunner _runner;
     public float _duration = 10f;
+
+    public CoinEffect(IRunner runner, CoinSO config)
+    {
+        _runner = runner;
+        _duration = config.Duration;
+    }
 }

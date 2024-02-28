@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class EventManager
+public class EventManager : MonoBehaviour 
 {
-    public static event Action OnGameOver;
-    public static void Fire_OnGameOver() => OnGameOver?.Invoke();
+    public delegate void OnGameOver();
+    public static event OnGameOver onGameOver;
+    public static void RaisOnGameOver() => onGameOver?.Invoke();
 }

@@ -18,6 +18,7 @@ public partial class Player : MonoBehaviour, IRunner
     private AnimationController _animController;
     private PlayerCoinBehavior _coinBehaviorManager;
     private CharacterController _characterController;
+    private Animator _animator;
 
     public Vector3 Position => transform.position;
     public Vector3 Velocity { get; set; }
@@ -28,20 +29,20 @@ public partial class Player : MonoBehaviour, IRunner
 
     [Inject]
     public void Construct(IPublisher<CoinsScoreMessage> scorePublisher) => _scorePublisher = scorePublisher;
-    
-
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _animController = GetComponent<AnimationController>();
         _coinBehaviorManager = new PlayerCoinBehavior(this);
+        _animator = GetComponentInChildren<Animator>();
 
         Velocity = new Vector3(0f, 0f, _speed);
     }
 
-    private void OnEnable() => EventManager.OnGameOver += _animController.SetDeadAnim;
-    private void OnDisable() => EventManager.OnGameOver -= _animController.SetDeadAnim;
+    private void OnEnable() => EventManager.onGameOver += SetDeadAnim;
+    private void OnDisable() => EventManager.onGameOver -= SetDeadAnim;
+    public void SetDeadAnim() => _animator.SetBool(AnimatorHashIDs.DeadAnimId, true);
 
     private void Update()
     {
