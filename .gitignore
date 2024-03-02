@@ -26,7 +26,7 @@
 .vs/
 
 #Ignore .idea files
-_Scripts/.idea
+_Scripts/.idea/
 
 # Gradle cache directory
 .gradle/
